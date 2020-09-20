@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Personal Exp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+    />
+</head>
+<body>
+        <nav class="navbar navbar-dark bg-dark">
+                <span class="navbar-brand mb-0 h1">Xpers</span>
+                <span class="navbar-brand mb-0 h1" id="headingt"></span>
+        </nav>
+        <div class="container-fluid bg-light" style="min-height: 100vh">
+            <div class="container">
+                        <div class="jumbotron mt-4">
+					     <div class="input-group mb-3">
+                        <input
+                            id="inpa"
+							type="text"
+							class="form-control"
+							placeholder="Amount spent"
+							aria-label="Amount spent"
+							aria-describedby="spent in rupee"
+						/>
+						<div class="input-group-append">
+							<span class="input-group-text" id="spent in rupee">₹</span>
+						</div>
+					</div>
+					 <div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="spent at">@</span>
+						</div>
+                        <input
+                            id="stri"
+							type="text"
+							class="form-control"
+							placeholder="spent On"
+							aria-label="spent On"
+							aria-describedby="spent at"
+						/>
+						<div class="input-group-append">
+							<button class="btn btn-outline-primary" type="button" id="btnc">Add</button>
+                        </div>
+                    </div>
+                    <div>
+                        <ul class="list-group" id="exptable">
+                        </ul>
+            </div>
+        </div>
+    <script>
+        const ele = document.querySelector("#btnc");
+        const ell = document.querySelector("#clea");
+        const err = document.querySelector("#exptable");
+        const heading1=document.querySelector("#headingt");
+         let cnt=0;
+         heading1.textContent=cnt;
+         const allexp=[];
+         function cntin () {
+             const expitem={};
+            const inputele=document.querySelector("#inpa");
+            const textDe=stri.value;
+            const exp=parseInt(inputele.value,10);
+            expitem.desc= textDe;
+            expitem.amount=exp;
+            expitem.moment= new Date();
+            allexp.push(expitem);
+            cnt=cnt+exp;
+            const sometext=`Total: ${cnt}`;
+            heading1.textContent=sometext;
+           renderlist(allexp);
+            }
+            ele.addEventListener("click",cntin,false);
+            function createlisti({desc,amount,moment}){
+                return  `<li class="list-group-item d-flex justify-content-between">
+							<div class="d-flex flex-column">
+                                    ${desc}
+								<small class="text-muted">${getDatestring(moment)} </small>
+							</div>
+							<div>
+								<span class="px-5">
+                                    ${amount}
+								</span>
+								<button type="button"
+                                class="btn btn-outline-danger btn-sm"
+                                onclick="deleteitem(${moment.valueOf()})"
+                                >
+									<i class="fas fa-trash-alt"></i>
+								</button>
+							</div>
+						</li>`
+            }
+            function getDatestring(momento){
+                return momento.toLocaleDateString(`en-US`,{
+                    year: `numeric`,
+                    month: `long`,
+                    day:`numeric`
+                    });
+            }
+            function deleteitem(dateValue){
+                    const newAr=allexp.filter(exp => exp.moment.valueOf() !== dateValue);
+                    renderlist(newAr);
+            }
+            function renderlist(arroflst){
+                const allexpt=arroflst.map(exp => createlisti(exp));
+                    const joined=allexpt.join('');
+                    exptable.innerHTML=joined;
+            }
+            
+    </script>
+    <script
+    defer
+    src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+    integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+    crossorigin="anonymous"
+    ></script>
+    </div>
+</body>
+</html>
